@@ -1,5 +1,11 @@
-name: "Build"
-description: "Run the build"
-runs:
-  using: "docker"
-  image: "Dockerfile"
+on: [push]
+
+jobs:
+  build_job:
+    runs-on: ubuntu-latest
+    name: A job to runn the build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Build step
+        uses: ./
