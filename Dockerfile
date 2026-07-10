@@ -129,6 +129,7 @@ RUN cmake --install .
 
 WORKDIR /build
 RUN tar czf mingw-w64-v14.0.0.tar.gz aarch64-w64-mingw32 i686-w64-mingw32 x86_64-w64-mingw32
+RUN cp mingw-w64-v14.0.0.tar.gz /github/workspace
 
-FROM scratch
-COPY --from=build /build/mingw-w64-v14.0.0.tar.gz /github/workspace
+# Dummy entrypoint to satisfy GHA
+ENTRYPOINT [ "/bin/true" ]
