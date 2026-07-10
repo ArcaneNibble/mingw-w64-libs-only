@@ -135,6 +135,8 @@ COPY --from=build /build/mingw-w64-v14.0.0.tar.gz /
 
 # PLEASE FUCKING WORK GODFUCKINGDAMMIT
 COPY --chmod=755 <<EOF /copy-to-github.sh
+#!/bin/sh
+
 cp /mingw-w64-v14.0.0.tar.gz /github/workspace
 EOF
 ENTRYPOINT [ "/copy-to-github.sh" ]
