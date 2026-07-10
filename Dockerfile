@@ -2,7 +2,7 @@ FROM debian:trixie as build
 
 WORKDIR /build
 
-RUN apt update && apt -y install clang llvm git make ninja-build cmake wget
+RUN apt update && apt -y install clang llvm git make ninja-build cmake wget busybox-static
 
 RUN git clone https://git.code.sf.net/p/mingw-w64/mingw-w64
 RUN cd mingw-w64 && git checkout v14.0.0
@@ -132,11 +132,7 @@ RUN tar czf mingw-w64-v14.0.0.tar.gz aarch64-w64-mingw32 i686-w64-mingw32 x86_64
 
 FROM scratch
 COPY --from=build /build/mingw-w64-v14.0.0.tar.gz /
+COPY --from=build /usr/bin/busybox /
 
 # PLEASE FUCKING WORK GODFUCKINGDAMMIT
-COPY --chmod=755 <<EOF /copy-to-github.sh
-#!/bin/sh
-
-cp /mingw-w64-v14.0.0.tar.gz /github/workspace
-EOF
-ENTRYPOINT [ "/copy-to-github.sh" ]
+ENTRYPOINT [ "/busybox", "cp", "/mingw-w64-v14.0.0.tar.gz", "/github/workspace" ]
