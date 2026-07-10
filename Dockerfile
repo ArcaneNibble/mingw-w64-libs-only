@@ -129,9 +129,9 @@ RUN cmake --install .
 
 WORKDIR /build
 RUN tar czf mingw-w64-v14.0.0.tar.gz aarch64-w64-mingw32 i686-w64-mingw32 x86_64-w64-mingw32
-COPY --chmod=755 <<EOF /build/copy-to-github.sh
-cp /build/mingw-w64-v14.0.0.tar.gz /github/workspace
-EOF
 
-# Copy the result to GHA output
-ENTRYPOINT [ "/build/copy-to-github.sh" ]
+FROM scratch
+COPY --from=build /build/mingw-w64-v14.0.0.tar.gz /github/workspace
+
+# Make GHA not complain???
+ENTRYPOINT [ "/bin/true" ]
