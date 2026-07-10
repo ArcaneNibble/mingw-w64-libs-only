@@ -1,4 +1,4 @@
-FROM debian:trixie as build
+FROM debian:trixie AS build
 
 WORKDIR /build
 

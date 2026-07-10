@@ -5,11 +5,14 @@ jobs:
     runs-on: ubuntu-latest
     name: A job to run the build
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6
+      - uses: actions/checkout@v6
       - name: Build step
         uses: ./
       - uses: actions/upload-artifact@v7
         with:
-          path: ${{ github.workspace }}/mingw-w64-v14.0.0.tar.gz
+          path: mingw-w64-v14.0.0.tar.gz
           archive: false
+      - uses: softprops/action-gh-release@v3
+        if: github.ref_type == 'tag'
+        with:
+          files: mingw-w64-v14.0.0.tar.gz
