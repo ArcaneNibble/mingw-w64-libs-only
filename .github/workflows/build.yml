@@ -2,6 +2,8 @@ on: [push]
 
 jobs:
   build_job:
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     name: A job to run the build
     steps:
